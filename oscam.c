@@ -2431,14 +2431,14 @@ int32_t send_dcw(struct s_client * client, ECM_REQUEST *er)
 		er->rc = E_FAKE;
 
 	if (er->reader_avail == 1) {
-		cs_log("%s (%04X&%06X/%04X/%04X/%02X:%04X): %s (%d ms)%s %s%s",
-			uname, er->caid, er->prid, er->pid, er->srvid, er->l, htons(er->checksum),
-			er->rcEx?erEx:stxt[er->rc], client->cwlastresptime, sby, schaninfo, sreason);
-	} else {
-		cs_log("%s (%04X&%06X/%04X/%04X/%02X:%04X): %s (%d ms)%s (%d of %d)%s%s",
-			uname, er->caid, er->prid, er->pid, er->srvid, er->l, htons(er->checksum),
-			er->rcEx?erEx:stxt[er->rc], client->cwlastresptime, sby, er->reader_count, er->reader_avail, schaninfo, sreason);
-	}
+                cs_log("%s (%04X&%06X/%04X/%04X/%02X:%04X): %s (%d ms)%s %s%s",
+                        uname, er->caid, er->prid, er->pid, er->srvid, er->l, htons(er->checksum),
+                        er->rcEx?erEx:stxt[er->rc], client->cwlastresptime, sby, schaninfo, sreason);
+        } else if (!er->rcEx) {
+                cs_log("%s (%04X&%06X/%04X/%04X/%02X:%04X): %s (%d ms)%s (%d of %d)%s%s",
+                        uname, er->caid, er->prid, er->pid, er->srvid, er->l, htons(er->checksum),
+                        er->rcEx?erEx:stxt[er->rc], client->cwlastresptime, sby, er->reader_count, er->reader_avail, schaninfo, sreason);
+        }
 
 	cs_ddump_mask (D_ATR, er->cw, 16, "cw:");
 
